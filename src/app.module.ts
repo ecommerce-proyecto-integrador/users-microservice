@@ -6,10 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './dtos/entity/user.dtos';
 import { Recovery } from './dtos/entity/recovery.dtos';
 import { JwtModule } from '@nestjs/jwt'; // Asegúrate de importar JwtModule
-import { Equipos } from './dtos/entity/equipos.dtos';
-//import { Integrantes } from './dtos/entity/integrantes.dtos';
-import { EquipoIntegranteRol } from './dtos/entity/equipoIntegranteRol.dto';
-import { Roles } from './dtos/entity/roles.dtos';
+
 
 @Module({
   imports: [
@@ -29,14 +26,14 @@ import { Roles } from './dtos/entity/roles.dtos';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 3307,
+      port: 3308,
       username: 'user_crud',
       password: 'root',
       database: 'db_crud',
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Users,Recovery,Equipos,EquipoIntegranteRol,Roles/*,Integrantes*/]),
+    TypeOrmModule.forFeature([Users,Recovery]),
     JwtModule.register({
       secret: 'tu_clave_secreta', // Reemplaza con tu clave secreta real
       signOptions: { expiresIn: '1h' }, // Opciones de firma del token

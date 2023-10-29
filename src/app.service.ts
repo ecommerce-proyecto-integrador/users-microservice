@@ -8,15 +8,14 @@ import { CreateUserDto } from './dtos/create-user-dto';
 import { JwtService } from '@nestjs/jwt';
 import { Recovery } from './dtos/entity/recovery.dtos';
 import * as nodemailer from 'nodemailer';
-import { Equipos } from './dtos/entity/equipos.dtos';
-import { EquipoIntegranteRol } from './dtos/entity/equipoIntegranteRol.dto';
+
 @Injectable()
 export class AppService {
   constructor(@Inject('USERS_SERVICE') private client: ClientProxy,
   @InjectRepository(Users) private readonly userRepository: Repository<Users>,private readonly jwtService: JwtService,
-  @InjectRepository(Equipos) private readonly equipoRepository: Repository<Equipos>,
+  
   @InjectRepository(Recovery) private readonly recoveryRepository: Repository<Recovery>,
-  @InjectRepository(EquipoIntegranteRol) private readonly equipoIntegranteRolRepository: Repository<EquipoIntegranteRol>){}
+  ){}
   
   /////////////////////////////////////////////////////// USUARIOS ///////////////////////////////////////////////////////
   async create(createUserDto: CreateUserDto) {
@@ -147,104 +146,5 @@ export class AppService {
 
     return false;
   }
-  /////////////////////////////////////////////////////// USUARIOS ///////////////////////////////////////////////////////
-   
-
-  /////////////////////////////////////////////////////// EQUIPOS ///////////////////////////////////////////////////////
-  
-  async createEquipos(nombre: string,correo: string): Promise<boolean> {
-    const equipo = new Equipos();
-    equipo.name = nombre;
-    equipo.correoCreador = correo;
-    //console.log(equipo)
-    const savedEquipo = await this.equipoRepository.save(equipo);
-    console.log("asd",savedEquipo) 
-    if(savedEquipo){
-      return true;
-    }
-    
-    return false; 
-  }
-
-  async showInfoEquipo(correoT: string): Promise<{ id: number,nombre: string; correo: string }[] | null> {
-    const correoCreador = correoT;
-    const equipos = await this.equipoRepository.find({ where: { correoCreador } });
-  
-    if (equipos && equipos.length > 0) {
-      
-      return equipos.map((equipo) => ({ id: equipo.idEquipos,nombre: equipo.name, correo: equipo.correoCreador }));
-    }
-  
-    return null; 
-  }
-
-  async updateNameEquipo(correo: string,nuevoNombreEquipo: string,antiguoNombreEquipo: string): Promise<boolean> {
-    const correoCreador = correo;
-    const name = antiguoNombreEquipo;
-    const equipo = await this.equipoRepository.findOne({ where: { correoCreador,name } });
-    
-
-    if(equipo && equipo.correoCreador == correo && antiguoNombreEquipo == equipo.name){
-      equipo.name = nuevoNombreEquipo;
-      await this.equipoRepository.save(equipo);
-      
-      return true;
-    }
-    
-
-    return false;
-  }
-
-  async deleteNameEquipo(correo: string , nameEquipo:string): Promise<boolean> {
-    const correoCreador = correo;
-    const name = nameEquipo;
-    const equipo = await this.equipoRepository.findOne({ where: { correoCreador,name } });
-    console.log(equipo)
-
-    if(equipo && equipo.correoCreador == correo){
-      await this.equipoRepository.remove(equipo);
-      
-      return true;
-    }
-    
-
-    return false;
-  }
-
-  async agregarIntegrante(nombreE: string, correoI: string, correoT: string): Promise<boolean> {
-    
-  
-    const nombreEquipo = nombreE;
-    const correoIntegrante = correoI;
-    const correoCreador = correoT;
-  
-    // Encuentra el equipo por correoCreador y nombre
-    const equipo = await this.equipoRepository.findOne({ where: { correoCreador, name: nombreEquipo } });
-    const idEquipo = equipo.idEquipos;
-    const existeCorreoIntegrante = await this.userRepository.findOne({ where: {correo:correoI } });
-    const existeIntegrante = await this.equipoIntegranteRolRepository.findOne({where:{correoIntegrante,equipo:{idEquipos:idEquipo}}})
-    if(!existeIntegrante){
-      if (existeCorreoIntegrante && equipo ) {
-      
-        const equipoIntegranteRol = new EquipoIntegranteRol();
-        equipoIntegranteRol.equipo = equipo;
-        equipoIntegranteRol.correoIntegrante = correoIntegrante;
-        
-
-        
-        await this.equipoIntegranteRolRepository.save(equipoIntegranteRol);
-
-        return true;
-      }
-
-    }
-    
-        return false;
-      }
-    
-  
-    
-  
-  /////////////////////////////////////////////////////// EQUIPOS ///////////////////////////////////////////////////////
   
 }

@@ -109,70 +109,10 @@ export class AppController {
         console.error('Falta INFO.');
       }
     }
-    /////////////////////////////////////////////////////// USUARIOS ///////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////// EQUIPOS ///////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////// USUARIOS //////////////////////////////////////////////////////
 
     
-    @EventPattern('new_equipo_created')
-    async handleNewEquipoCreated(data: { nombre: string, correo: string }) {
-      const { nombre, correo } = data;
-      //console.log(data)
-      if (nombre && correo) {
-        const resp = await this.appService.createEquipos(nombre,correo)
-        return resp;
-      } else {
-        console.error('Falta INFO1.');
-      }
-    }
-
-    @EventPattern('show_info_equipo')
-    async handleShowInfoEquipo(data: { correo: string }) {
-      const { correo } = data;
-      
-      if (correo) {
-        const resp = await this.appService.showInfoEquipo(correo)
-        return resp
-      } else {
-        console.error('Falta INFO.');
-      }
-    }
     
-    @EventPattern('update_name_equipo')
-    async handleUpdateNameEquipo(data: { oldName: string,newName: string, correo: string }) {
-      const { oldName,newName, correo } = data;
-      
-      if (oldName && newName && correo) {
-        const resp = await this.appService.updateNameEquipo(correo,newName,oldName)
-        return resp;
-      } else {
-        console.error('Falta INFO.');
-      }
-    }
-    @EventPattern('delete_name_equipo')
-    async handleDeleteNameEquipo(data: { name: string, correo: string }) {
-      const { name, correo } = data;
-      
-      if (name && correo) {
-        const resp = await this.appService.deleteNameEquipo(correo,name)
-        return resp;
-      } else {
-        console.error('Falta INFO.');
-      }
-    }
-    @EventPattern('agregar_integrante')
-    async handleAgregarIntegrante(data: { nombreEquipo: string, correoIntegrante: string,correo: string }) {
-      const { nombreEquipo, correoIntegrante,correo } = data;
-      
-      if (nombreEquipo && correoIntegrante) {
-        const resp = await this.appService.agregarIntegrante(nombreEquipo,correoIntegrante,correo)
-        return resp;
-      } else {
-        console.error('Falta INFO.');
-      }
-    }
-
-
-    /////////////////////////////////////////////////////// EQUIPOS ///////////////////////////////////////////////////////
    
   
 }
