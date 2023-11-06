@@ -35,3 +35,5 @@ jobs:
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u diegogmrn --password-stdin
           docker tag users-microservice:latest diegogmrn/users-microservice:latest
           docker push diegogmrn/users-microservice:latest
+
+          
