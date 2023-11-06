@@ -69,13 +69,20 @@ export class AppService {
 
   generateAccessToken(user: Partial<Users>): string {
     const expiresIn = 3600;
-    const payload = { correo: user.correo, };
+    const payload = { correo: user.correo,rol:user.rol };
     const accessToken = this.jwtService.sign(payload, { expiresIn });
     return accessToken;
   }
+  /*
   generate2AccessToken(correo: string): string {
     const expiresIn = 3600;
     const payload = { correo };
+    const accessToken = this.jwtService.sign(payload, { expiresIn });
+    return accessToken;
+  }*/
+  generate2AccessToken(user: Partial<Users>): string {
+    const expiresIn = 3600;
+    const payload = { correo: user.correo,rol:user.rol };
     const accessToken = this.jwtService.sign(payload, { expiresIn });
     return accessToken;
   }

@@ -10,4 +10,6 @@ export class Users{
     clave: string
     @Column()
     correo: string
+    @Column()
+    rol: string
 }
