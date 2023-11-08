@@ -15,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt'; // Asegúrate de importar JwtModule
         name: 'USERS_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'],
+          urls: ['amqp://rabbitmq:5672'], // sin docker es localhost
           queue: 'users_queue',
           queueOptions: {
             durable: false,
@@ -25,8 +25,8 @@ import { JwtModule } from '@nestjs/jwt'; // Asegúrate de importar JwtModule
     ]),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3308,
+      host: 'mysql', // sin docker es localhost
+      port: 3306, // sin docker es 3308
       username: 'user_crud',
       password: 'root',
       database: 'db_crud',
