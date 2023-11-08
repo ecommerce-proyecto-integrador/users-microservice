@@ -19,6 +19,7 @@ export class AppController {
           name: newUser.name,
           clave: newUser.clave,
           correo: newUser.correo,
+          rol: newUser.rol,
         };
         const resp =await this.appService.create(createUserDto);
         

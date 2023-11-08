@@ -11,5 +11,5 @@ export class Users{
     @Column()
     correo: string
     @Column()
-    rol: string
+    rol?: string
 }

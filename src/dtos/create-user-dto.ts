@@ -7,4 +7,6 @@ export class CreateUserDto{
     clave:string
     @IsString()
     correo:string
+    @IsString()
+    rol:string
 }
