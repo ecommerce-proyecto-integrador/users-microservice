@@ -11,5 +11,9 @@ export class Users{
     @Column()
     correo: string
     @Column()
+    phone: string
+    @Column()
+    rut: string
+    @Column()
     rol?: string
 }

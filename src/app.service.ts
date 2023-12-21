@@ -49,13 +49,15 @@ export class AppService {
     return false;
   }
 
-  async showInfoUser(correo: string): Promise<{ nombre: string; correo: string } | null> {
+  async showInfoUser(correo: string): Promise<{ nombre: string; correo: string; phone: string; rut: string } | null> {
     const usuario = await this.userRepository.findOne({ where: { correo } });
 
     if (usuario) {
       return {
         nombre: usuario.name,
         correo: usuario.correo,
+        phone: usuario.phone,
+        rut: usuario.rut,
       };
     }
 

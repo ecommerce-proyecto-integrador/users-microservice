@@ -67,6 +67,8 @@ export class AppController {
         return {
           nombre: resp.nombre,
           correo: resp.correo,
+          phone: resp.phone,
+          rut: resp.rut,
         };
       } else {
         console.error('Falta INFO.');
